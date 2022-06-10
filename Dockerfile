@@ -16,7 +16,7 @@ FROM alpine:latest
 RUN apk add --update --no-cache ca-certificates python3 py3-pip
 COPY --from=build /linux-amd64/helm /usr/local/bin/helm
 COPY --from=build /kubectl /usr/local/bin/kubectl
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 
 
