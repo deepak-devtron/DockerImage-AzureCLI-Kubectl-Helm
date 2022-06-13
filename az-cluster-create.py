@@ -39,4 +39,4 @@ time.sleep(1200)
 os.system("kubectl get po -ndevtroncd")
 
 # Here we are deleting azure resource group
-os.system(f"az group delete --name {args.resourceGroup}")
+os.system(f"az group delete -y --name {args.resourceGroup}")
