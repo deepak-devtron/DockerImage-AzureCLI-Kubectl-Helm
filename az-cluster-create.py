@@ -18,8 +18,8 @@ banner("Here we are storing the values of arguments that the user is passing wit
 parser.add_argument("-u", "--username", required=True, help="service principal username", metavar="")
 parser.add_argument("-p", "--password", required=True, help="service principal password", metavar="")
 parser.add_argument("-t", "--tenant", required=True, help="service principal tenant", metavar="")
-parser.add_argument("-r", "--resourceGroup", required=True, help="service principal tenant", metavar="")
-parser.add_argument("-c", "--clusterName", required=True, help="service principal tenant", metavar="")
+parser.add_argument("-r", "--resourceGroup", required=True, help="service principal resource group", metavar="")
+parser.add_argument("-c", "--clusterName", required=True, help="service principal cluster name", metavar="")
 
 args = parser.parse_args()
 
