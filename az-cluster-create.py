@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import time
 import subprocess as sp
@@ -61,6 +62,20 @@ while sp.getoutput("cat status.txt") != "Applied":
     else:
         continue
 print("devtron installation complete..")
+banner("Here we are getting dashboard url")
+BaseServerUrl = sp.getoutput(
+    "kubectl get svc -n devtroncd devtron-service  -o jsonpath='{.status.loadBalancer.ingress}'")
+
+banner("Here we are getting admin password")
+LoginPassword = sp.getoutput("kubectl -n devtroncd get secret devtron-secret -o jsonpath='{.data.ACD_PASSWORD}' | base64 -d")
+
+Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": BaseServerUrl,
+               "LOGIN_PASSWORD": LoginPassword}
+credentialsJson = json.dumps(Credentials)
+
+banner("Here we are setting credentials in a json file mounted over working container")
+sp.getoutput(
+    "credentialsJson > /unit-test/credentials.json")
 
 banner("Here we are deleting azure resource group")
 os.system(f"az group delete -y --name {args.resourceGroup}")
