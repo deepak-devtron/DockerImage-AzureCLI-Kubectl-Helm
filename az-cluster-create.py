@@ -71,11 +71,10 @@ LoginPassword = sp.getoutput("kubectl -n devtroncd get secret devtron-secret -o 
 
 Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": BaseServerUrl,
                "LOGIN_PASSWORD": LoginPassword}
-credentialsJson = json.dumps(Credentials)
 
 banner("Here we are setting credentials in a json file mounted over working container")
-sp.getoutput(
-    "credentialsJson > /unit-test/credentials.json")
+credentialsJson = json.dumps(Credentials, indent = 4)
+f = open("/unit-test/credentials.json",'w')
+f.write(credentialsJson)
+f.close()
 
-banner("Here we are deleting azure resource group")
-os.system(f"az group delete -y --name {args.resourceGroup}")
