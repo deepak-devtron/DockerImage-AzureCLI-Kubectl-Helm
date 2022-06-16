@@ -67,7 +67,7 @@ while sp.getoutput("cat status.txt") != "Applied":
 print("devtron installation complete..")
 banner("Here we are getting dashboard url")
 BaseServerUrl = sp.getoutput(
-    "kubectl get svc -n devtroncd devtron-service  -o jsonpath='{.status.loadBalancer.ingress}.ingress[0].ip'")
+    "kubectl get svc -n devtroncd devtron-service  -o jsonpath='{.status.loadBalancer.ingress[0].ip}'")
 
 banner("Here we are getting admin password")
 LoginPassword = sp.getoutput(
