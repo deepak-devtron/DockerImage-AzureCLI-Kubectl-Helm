@@ -21,6 +21,7 @@ parser.add_argument("-p", "--password", required=True, help="service principal p
 parser.add_argument("-t", "--tenant", required=True, help="service principal tenant", metavar="")
 parser.add_argument("-r", "--resourceGroup", required=True, help="service principal resource group", metavar="")
 parser.add_argument("-c", "--clusterName", required=True, help="service principal cluster name", metavar="")
+parser.add_argument("-cr", "--credentialsFilePath", required=True, help="service principal cluster name", metavar="")
 
 args = parser.parse_args()
 
@@ -32,7 +33,8 @@ os.system(f"az group create --name {args.resourceGroup} --location eastus")
 time.sleep(5)
 
 banner("Here we are creating AKS cluster")
-os.system(f"az aks create --resource-group {args.resourceGroup} --name {args.clusterName} --node-count 1 --generate-ssh-keys --enable-node-public-ip")
+os.system(
+    f"az aks create --resource-group {args.resourceGroup} --name {args.clusterName} --node-count 1 --generate-ssh-keys --enable-node-public-ip")
 print("cluster creation complete..")
 
 banner("Here we are getting aks credentials")
@@ -52,8 +54,9 @@ os.system("sleep 2")
 os.system("touch status.txt")
 
 while sp.getoutput("cat status.txt") != "Applied":
-    sp.getoutput("kubectl -n devtroncd get installers installer-devtron -o jsonpath='{.status.sync.status}' > status.txt")
-    os.system("sleep 30")
+    sp.getoutput(
+        "kubectl -n devtroncd get installers installer-devtron -o jsonpath='{.status.sync.status}' > status.txt")
+    os.system("sleep 90")
     if sp.getoutput("cat status.txt") == "Downloaded":
         print("\nStill Downloading Microservices : ", end="")
         os.system("cat status.txt")
@@ -64,17 +67,17 @@ while sp.getoutput("cat status.txt") != "Applied":
 print("devtron installation complete..")
 banner("Here we are getting dashboard url")
 BaseServerUrl = sp.getoutput(
-    "kubectl get svc -n devtroncd devtron-service  -o jsonpath='{.status.loadBalancer.ingress}'")
+    "kubectl get svc -n devtroncd devtron-service  -o jsonpath='{.status.loadBalancer.ingress}.ingress[0].ip'")
 
 banner("Here we are getting admin password")
-LoginPassword = sp.getoutput("kubectl -n devtroncd get secret devtron-secret -o jsonpath='{.data.ACD_PASSWORD}' | base64 -d")
+LoginPassword = sp.getoutput(
+    "kubectl -n devtroncd get secret devtron-secret -o jsonpath='{.data.ACD_PASSWORD}' | base64 -d")
 
-Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": BaseServerUrl,
+Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": "http://"+BaseServerUrl+"/",
                "LOGIN_PASSWORD": LoginPassword}
 
 banner("Here we are setting credentials in a json file mounted over working container")
-credentialsJson = json.dumps(Credentials, indent = 4)
-f = open("/unit-test/credentials.json",'w')
+credentialsJson = json.dumps(Credentials, indent=4)
+f = open(f"{args.credentialsFilePath}", 'w')
 f.write(credentialsJson)
 f.close()
-
