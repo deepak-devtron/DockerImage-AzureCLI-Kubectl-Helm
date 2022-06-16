@@ -21,7 +21,6 @@ parser.add_argument("-p", "--password", required=True, help="service principal p
 parser.add_argument("-t", "--tenant", required=True, help="service principal tenant", metavar="")
 parser.add_argument("-r", "--resourceGroup", required=True, help="service principal resource group", metavar="")
 parser.add_argument("-c", "--clusterName", required=True, help="service principal cluster name", metavar="")
-parser.add_argument("-cr", "--credentialsFilePath", required=True, help="service principal cluster name", metavar="")
 
 args = parser.parse_args()
 
@@ -78,6 +77,6 @@ Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": "http://"+BaseServe
 
 banner("Here we are setting credentials in a json file mounted over working container")
 credentialsJson = json.dumps(Credentials, indent=4)
-f = open(f"{args.credentialsFilePath}", 'w')
+f = open("/unit-test/credentials.json", 'w')
 f.write(credentialsJson)
 f.close()
