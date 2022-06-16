@@ -18,6 +18,8 @@ RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y python3 && apt-get install -y python3-pip
 RUN apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg
 RUN pip3 install azure-cli
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /linux-amd64/helm /usr/local/bin/helm
 COPY --from=build /kubectl /usr/local/bin/kubectl
 
