@@ -77,6 +77,6 @@ Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": "http://"+BaseServe
 
 banner("Here we are setting credentials in a json file mounted over working container")
 credentialsJson = json.dumps(Credentials, indent=4)
-f = open("/unit-test/credentials.json", 'w')
+f = open("/base-test/credentials.json", 'w')
 f.write(credentialsJson)
 f.close()
