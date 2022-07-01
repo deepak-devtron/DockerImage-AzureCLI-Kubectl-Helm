@@ -21,6 +21,7 @@ parser.add_argument("-p", "--password", required=True, help="service principal p
 parser.add_argument("-t", "--tenant", required=True, help="service principal tenant", metavar="")
 parser.add_argument("-r", "--resourceGroup", required=True, help="service principal resource group", metavar="")
 parser.add_argument("-c", "--clusterName", required=True, help="service principal cluster name", metavar="")
+parser.add_argument("-tag", "--tag", required=True, help="release tag for oss installation", metavar="")
 
 args = parser.parse_args()
 
@@ -46,7 +47,7 @@ os.system("kubectl apply -f devtron-ucid.yaml -ndevtroncd")
 banner("devtron-ucid has been applied in devtroncd ns")
 os.system("rm devtron-ucid.yaml")
 os.system("helm repo add devtron https://helm.devtron.ai/")
-os.system("helm install devtron devtron/devtron-operator --namespace devtroncd --set installer.modules={cicd}")
+os.system(f"helm install devtron devtron/devtron-operator --namespace devtroncd --set installer.modules={cicd} --set installer.release={args.tag}")
 
 banner("Here we are checking installation status of application")
 os.system("sleep 2")
