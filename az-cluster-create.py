@@ -47,7 +47,7 @@ os.system("kubectl apply -f devtron-ucid.yaml -ndevtroncd")
 banner("devtron-ucid has been applied in devtroncd ns")
 os.system("rm devtron-ucid.yaml")
 os.system("helm repo add devtron https://helm.devtron.ai/")
-os.system(f"helm install devtron devtron/devtron-operator --namespace devtroncd --set installer.modules={cicd} --set installer.release={args.tag}")
+os.system("helm install devtron devtron/devtron-operator --namespace devtroncd --set installer.modules={cicd} --set " +f"installer.release={args.tag}")
 
 banner("Here we are checking installation status of application")
 os.system("sleep 2")
