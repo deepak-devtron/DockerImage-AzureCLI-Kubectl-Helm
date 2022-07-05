@@ -34,7 +34,7 @@ time.sleep(5)
 
 banner("Here we are creating AKS cluster")
 os.system(
-    f"az aks create --resource-group {args.resourceGroup} --node-vm-size B4ms --name {args.clusterName} --node-count 1 --generate-ssh-keys --enable-node-public-ip")
+    f"az aks create --resource-group {args.resourceGroup} --name {args.clusterName} --node-vm-size standard_b4ms --node-count 1 --generate-ssh-keys --enable-node-public-ip")
 print("cluster creation complete..")
 
 banner("Here we are getting aks credentials")
