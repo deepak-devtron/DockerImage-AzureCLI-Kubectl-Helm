@@ -15,7 +15,7 @@ RUN chmod +x kubectl
 FROM ubuntu:20.04
 COPY az-cluster-create.py .
 RUN apt-get update && apt-get -y upgrade
-RUN apt-get install -y python3 && apt-get install -y python3-pip
+RUN apt-get install -y python3 && apt-get install -y python3-pip && install -y libffi-dev
 RUN apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg
 RUN pip3 install azure-cli
 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
