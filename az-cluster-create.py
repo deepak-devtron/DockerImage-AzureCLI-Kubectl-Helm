@@ -71,7 +71,7 @@ BaseServerUrl = sp.getoutput(
 
 banner("Here we are getting admin password")
 LoginPassword = sp.getoutput(
-    "kubectl -n devtroncd get secret devtron-secret -o jsonpath='{.data.ACD_PASSWORD}' | base64 -d")
+    "kubectl -n devtroncd get secret devtron-secret -o jsonpath='{.data.ADMIN_PASSWORD}' | base64 -d")
 
 Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": "http://"+BaseServerUrl,
                "LOGIN_PASSWORD": LoginPassword}
