@@ -75,9 +75,11 @@ LoginPassword = sp.getoutput(
 
 Credentials = {"LOGIN_USERNAME": "admin", "BASE_SERVER_URL": "http://"+BaseServerUrl,
                "LOGIN_PASSWORD": LoginPassword}
+os.environ['BASE_SERVER_URL'] = "http://"+BaseServerUrl
+os.environ['LOGIN_PASSWORD'] = LoginPassword
 
-banner("Here we are setting credentials in a json file mounted over working container")
-credentialsJson = json.dumps(Credentials, indent=4)
-f = open("/base-test/credentials.json", 'w')
-f.write(credentialsJson)
-f.close()
+#banner("Here we are setting credentials in a json file mounted over working container")
+#credentialsJson = json.dumps(Credentials, indent=4)
+#f = open("/base-test/credentials.json", 'w')
+#f.write(credentialsJson)
+#f.close()
